@@ -6,23 +6,60 @@ const Messages = require('../posts/postDb.js');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-
+    try {
+        const user = await User.insert(req.query);
+        res.status(200).json(user);
+      } catch (error) {
+        // log error to server
+        console.log(error);
+        res.status(500).json({
+          message: 'Error retrieving the hubs',
+        });
+      }
 });
 
 router.post('/:id/posts', (req, res) => {
-
+    try {
+        const user = await User.getById(req.body);
+        res.status(201).json(user);
+      } catch (error) {
+        // log error to server
+        console.log(error);
+        res.status(500).json({
+          message: 'Error adding the hub',
+        });
+      }
 });
 
 router.get('/', (req, res) => {
-
+    try {
+        const user = await User.get(req.query);
+        res.status(200).json(user);
+      } catch (error) {
+        // log error to server
+        console.log(error);
+        res.status(500).json({
+          message: 'Error retrieving the hubs',
+        });
+      }
 });
 
 router.get('/:id', (req, res) => {
-
+    res.status(200).json(req.hub);
 });
 
 router.get('/:id/posts', (req, res) => {
-
+    try {
+        const user = await User.getUserPosts(req.params.id);
+    
+        res.status(200).json(user);
+      } catch (error) {
+        // log error to server
+        console.log(error);
+        res.status(500).json({
+          message: 'Error getting the messages for the hub',
+        });
+      }
 });
 
 router.delete('/:id', (req, res) => {
